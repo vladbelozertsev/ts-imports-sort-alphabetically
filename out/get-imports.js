@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getImport = exports.getImports = void 0;
 const utils_1 = require("./utils");
 const vscode_1 = require("vscode");
-const getImports = () => {
-    const editor = vscode_1.window.activeTextEditor;
-    const imports = editor?.document.getText().split("import ");
+const getImports = (pramDoc) => {
+    const document = pramDoc || vscode_1.window.activeTextEditor?.document;
+    const imports = document?.getText().split("import ");
     if (!imports?.length)
         return null;
-    let restDocument = "";
+    let lastImport = 0;
     const mapped = imports.slice(1).map((item, index) => {
         if (index !== imports.length - 2)
             return (0, exports.getImport)(item);
@@ -16,8 +16,10 @@ const getImports = () => {
         const doubleQuote = (0, utils_1.getPosition)(item, '"', 2) + 1;
         const closestChar = Math.min(singleQuote, doubleQuote);
         const semicolon = item[closestChar] === ";" ? 1 : 0;
-        restDocument = item.slice(closestChar + semicolon);
-        return (0, exports.getImport)(item.slice(0, closestChar + semicolon));
+        const cutted = item.slice(0, closestChar + semicolon);
+        const breaks = (0, utils_1.getFirstN)(item.slice(closestChar + semicolon));
+        lastImport = document.getText().lastIndexOf(cutted) + cutted.length + breaks; // если кроме импортов пусто?
+        return (0, exports.getImport)(cutted);
     });
     return mapped.reduce((acc, cur) => {
         const value = `import ${cur}`.trim();
@@ -30,7 +32,7 @@ const getImports = () => {
         normalLong: [],
         types: [],
         typesLong: [],
-        restDocument,
+        lastImport,
     });
 };
 exports.getImports = getImports;

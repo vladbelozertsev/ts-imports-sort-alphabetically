@@ -35,12 +35,17 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.insertImports = void 0;
 const vscode = __importStar(require("vscode"));
-const insertImports = (sorted, restDocument) => {
+const insertImports = (sorted, end) => {
+    const { normal, normalLong, types, typesLong } = sorted;
     const editor = vscode.window.activeTextEditor;
-    const begin = editor?.document.getText().indexOf("import");
-    const end = editor?.document.getText().indexOf(restDocument);
+    if (!editor)
+        return;
     editor.edit((editBuilder) => {
-        editBuilder.replace(new vscode.Range(editor?.document.positionAt(begin), editor?.document.positionAt(end)), `${sorted.types}${sorted.normal}${sorted.normalLong}${sorted.typesLong}`);
+        const begin = editor?.document.getText().indexOf("import");
+        const rangeBeg = editor?.document.positionAt(begin);
+        const rangeEnd = editor?.document.positionAt(end);
+        const range = new vscode.Range(rangeBeg, rangeEnd);
+        editBuilder.replace(range, `${types}${normal}${normalLong}${typesLong}`);
     });
 };
 exports.insertImports = insertImports;

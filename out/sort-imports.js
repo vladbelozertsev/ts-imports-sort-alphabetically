@@ -3,14 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sortImports = void 0;
 const utils_1 = require("./utils");
 const sortImports = (imports) => {
+    const nBreak = !!imports.normal?.length ? "\n\n" : "";
+    const tBreak = !!imports.types?.length ? "\n\n" : "";
     const nlBreak = !!imports.normalLong?.length ? "\n\n" : "";
     const tlBreak = !!imports.typesLong?.length ? "\n\n" : "";
-    const nBreak = !!imports.normal?.length ? "\n\n" : "";
     return {
-        normal: nBreak + imports.normal.sort().join("\n"),
-        types: imports.types.sort().join("\n"),
-        normalLong: nlBreak + imports.normalLong.map(getImport).join("\n\n"),
-        typesLong: tlBreak + imports.typesLong.map(getImport).join("\n\n"),
+        types: imports.types.sort().join("\n") + tBreak,
+        normal: imports.normal.sort().join("\n") + nBreak,
+        normalLong: imports.normalLong.map(getImport).join("\n") + nlBreak,
+        typesLong: imports.typesLong.map(getImport).join("\n") + tlBreak,
     };
 };
 exports.sortImports = sortImports;

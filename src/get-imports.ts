@@ -1,12 +1,12 @@
 import { Imports } from "./types";
-import { getPosition, withoutSpaces } from "./utils";
-import { window } from "vscode";
+import { getFirstN, getPosition, withoutSpaces } from "./utils";
+import { TextDocument, window } from "vscode";
 
-export const getImports = () => {
-  const editor = window.activeTextEditor;
-  const imports = editor?.document.getText().split("import ");
+export const getImports = (pramDoc?: TextDocument) => {
+  const document = pramDoc || window.activeTextEditor?.document;
+  const imports = document?.getText().split("import ");
   if (!imports?.length) return null;
-  let restDocument = "";
+  let lastImport = 0;
 
   const mapped = imports.slice(1).map((item, index) => {
     if (index !== imports.length - 2) return getImport(item);
@@ -14,8 +14,10 @@ export const getImports = () => {
     const doubleQuote = getPosition(item, '"', 2) + 1;
     const closestChar = Math.min(singleQuote, doubleQuote);
     const semicolon = item[closestChar] === ";" ? 1 : 0;
-    restDocument = item.slice(closestChar + semicolon);
-    return getImport(item.slice(0, closestChar + semicolon));
+    const cutted = item.slice(0, closestChar + semicolon);
+    const breaks = getFirstN(item.slice(closestChar + semicolon));
+    lastImport = document!.getText().lastIndexOf(cutted) + cutted.length + breaks; // если кроме импортов пусто?
+    return getImport(cutted);
   });
 
   return mapped.reduce(
@@ -31,7 +33,7 @@ export const getImports = () => {
       normalLong: [],
       types: [],
       typesLong: [],
-      restDocument,
+      lastImport,
     } as Imports
   );
 };

@@ -3,7 +3,7 @@ export type Imports = {
   normalLong: string[];
   types: string[];
   typesLong: string[];
-  restDocument: string;
+  lastImport: number;
 };
 
 export type ImportsSorted = {
