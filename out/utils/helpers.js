@@ -22,7 +22,7 @@ const getTabString = () => {
 exports.getTabString = getTabString;
 const isSupportedLang = (languageId) => {
     const langs = ["javascript", "javascriptreact", "typescript", "typescriptreact"];
-    return langs.includes(languageId);
+    return !languageId ? false : langs.includes(languageId);
 };
 exports.isSupportedLang = isSupportedLang;
 const withoutSpaces = (str) => {

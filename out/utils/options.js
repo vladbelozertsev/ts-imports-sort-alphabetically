@@ -9,7 +9,7 @@ function getSortOnSave() {
     return config().get("sortOnSave");
 }
 function getPrintWidth() {
-    return config().get("sortOnSave");
+    return config().get("printWidth");
 }
 function getImportsDevide() {
     return config().get("importsDevide");

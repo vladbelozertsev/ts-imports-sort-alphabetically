@@ -7,8 +7,8 @@ import { parseImportNodes } from "./utils/parse-import-nodes";
 export const getImports = (pramDoc?: TextDocument) => {
   const document = pramDoc || window.activeTextEditor?.document;
   const imports = parseImportNodes(document);
-  const printWidth = getPrintWidth();
   if (!imports?.length) return null;
+  const printWidth = getPrintWidth();
 
   const mapped = imports.map((item) => {
     const clear = item.replaceAll("\n", "").trim();

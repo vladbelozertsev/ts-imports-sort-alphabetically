@@ -12,7 +12,7 @@ export const sortImports = (imports: Imports): string => {
   const isF = !!first?.length;
   const isS = !!second?.length;
 
-  const fBreak = (isF && isS && devide) || (isF && (isNL || isTL)) ? "\n\n" : isF ? "\n" : "";
+  const fBreak = (isF && isS && devide) || (isF && !isS && (isNL || isTL)) ? "\n\n" : isF ? "\n" : "";
   const sBreak = isS && (isNL || isTL) ? "\n\n" : isS ? "\n" : "";
   const nlBreak = isNL && isTL ? "\n\n" : isNL ? "\n" : "";
   const tlBreak = isTL ? "\n" : "";

@@ -38,12 +38,15 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const get_imports_1 = require("./get-imports");
 const sort_imports_1 = require("./sort-imports");
+const helpers_1 = require("./utils/helpers");
+const options_1 = require("./utils/options");
 function activate(context) {
     const command = vscode.commands.registerCommand("ts-imports-sort-alphabetically.sort", () => {
         try {
             const editor = vscode.window.activeTextEditor;
+            const lang = (0, helpers_1.isSupportedLang)(editor?.document.languageId);
             const documentImports = (0, get_imports_1.getImports)();
-            if (!editor || !documentImports)
+            if (!editor || !lang || !documentImports)
                 return;
             const insert = (0, sort_imports_1.sortImports)(documentImports);
             editor.edit((TextEdit) => {
@@ -55,6 +58,10 @@ function activate(context) {
         }
     });
     const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
+        const isSupporedLang = (0, helpers_1.isSupportedLang)(e.document.languageId);
+        const isSortOnSave = (0, options_1.getSortOnSave)();
+        if (!isSupporedLang || !isSortOnSave)
+            return;
         e.waitUntil(new Promise((resolve) => {
             try {
                 const documentImports = (0, get_imports_1.getImports)(e.document);

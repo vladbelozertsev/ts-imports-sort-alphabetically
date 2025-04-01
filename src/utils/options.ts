@@ -5,7 +5,7 @@ export function getSortOnSave(): boolean {
 }
 
 export function getPrintWidth(): number {
-  return config().get("sortOnSave") as number;
+  return config().get("printWidth") as number;
 }
 
 export function getImportsDevide(): boolean {

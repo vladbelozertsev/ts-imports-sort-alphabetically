@@ -1,13 +1,16 @@
 import * as vscode from "vscode";
 import { getImports } from "./get-imports";
 import { sortImports } from "./sort-imports";
+import { isSupportedLang } from "./utils/helpers";
+import { getSortOnSave } from "./utils/options";
 
 export function activate(context: vscode.ExtensionContext) {
   const command = vscode.commands.registerCommand("ts-imports-sort-alphabetically.sort", () => {
     try {
       const editor = vscode.window.activeTextEditor;
+      const lang = isSupportedLang(editor?.document.languageId);
       const documentImports = getImports();
-      if (!editor || !documentImports) return;
+      if (!editor || !lang || !documentImports) return;
       const insert = sortImports(documentImports);
       editor.edit((TextEdit) => {
         TextEdit.replace(documentImports.range, insert);
@@ -18,6 +21,9 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
+    const isSupporedLang = isSupportedLang(e.document.languageId);
+    const isSortOnSave = getSortOnSave();
+    if (!isSupporedLang || !isSortOnSave) return;
     e.waitUntil(
       new Promise<vscode.TextEdit[]>((resolve) => {
         try {

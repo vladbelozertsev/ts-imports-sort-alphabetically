@@ -8,9 +8,9 @@ const parse_import_nodes_1 = require("./utils/parse-import-nodes");
 const getImports = (pramDoc) => {
     const document = pramDoc || vscode_1.window.activeTextEditor?.document;
     const imports = (0, parse_import_nodes_1.parseImportNodes)(document);
-    const printWidth = (0, options_1.getPrintWidth)();
     if (!imports?.length)
         return null;
+    const printWidth = (0, options_1.getPrintWidth)();
     const mapped = imports.map((item) => {
         const clear = item.replaceAll("\n", "").trim();
         const regex = new RegExp(/(?<={)[^]*?(?=})/, "g");

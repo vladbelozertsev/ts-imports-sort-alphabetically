@@ -16,9 +16,9 @@ export const getTabString = () => {
   return new Array(tabSize + 1).join(" ");
 };
 
-export const isSupportedLang = (languageId: string) => {
+export const isSupportedLang = (languageId?: string) => {
   const langs = ["javascript", "javascriptreact", "typescript", "typescriptreact"];
-  return langs.includes(languageId);
+  return !languageId ? false : langs.includes(languageId);
 };
 
 export const withoutSpaces = (str: string) => {
