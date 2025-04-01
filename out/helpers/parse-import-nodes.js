@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.importRegex = void 0;
-exports.default = parseImportNodes;
+exports.parseImportNodes = parseImportNodes;
 const name = `((?!\\d)(?:(?!\\s)[$\\w\\u0080-\\uFFFF]|\\\\u[\\da-fA-F]{4}|\\\\u\\{[\\da-fA-F]+\\})+)`;
 const ws = `[\\s\\n\\r]`;
 const namespaceToken = `\\*\\s+as\\s+(${name})`;
@@ -23,4 +23,4 @@ function parseImportNodes(document) {
         imports.push(match[0]);
     return imports.filter((imp) => !!imp);
 }
-//# sourceMappingURL=parseImportNodes.js.map
+//# sourceMappingURL=parse-import-nodes.js.map

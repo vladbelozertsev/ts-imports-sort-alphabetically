@@ -40,31 +40,33 @@ const get_imports_1 = require("./get-imports");
 const sort_imports_1 = require("./sort-imports");
 function activate(context) {
     const command = vscode.commands.registerCommand("ts-imports-sort-alphabetically.sort", () => {
-        const editor = vscode.window.activeTextEditor;
-        const documentImports = (0, get_imports_1.getImports)();
-        if (!editor || !documentImports)
-            return;
-        const sorted = (0, sort_imports_1.sortImports)(documentImports);
-        editor.edit((TextEdit) => {
-            const begin = editor?.document.getText().indexOf("import ");
-            const rangeBeg = editor?.document.positionAt(begin);
-            const rangeEnd = editor?.document.positionAt(documentImports.lastImport);
-            const range = new vscode.Range(rangeBeg, rangeEnd);
-            const { normal, normalLong, types, typesLong } = sorted;
-            TextEdit.replace(range, `${types}${normal}${normalLong}${typesLong}`);
-        });
+        try {
+            const editor = vscode.window.activeTextEditor;
+            const documentImports = (0, get_imports_1.getImports)();
+            if (!editor || !documentImports)
+                return;
+            const insert = (0, sort_imports_1.sortImports)(documentImports);
+            editor.edit((TextEdit) => {
+                TextEdit.replace(documentImports.range, insert);
+            });
+        }
+        catch (err) {
+            console.error(err);
+        }
     });
     const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
         e.waitUntil(new Promise((resolve) => {
-            const documentImports = (0, get_imports_1.getImports)(e.document);
-            if (!documentImports)
-                return resolve([]);
-            const sorted = (0, sort_imports_1.sortImports)(documentImports);
-            const begin = e.document.getText().indexOf("import ");
-            const end = documentImports.lastImport;
-            const range = new vscode.Range(e.document.positionAt(begin), e.document.positionAt(end));
-            const insert = `${sorted.types}${sorted.normal}${sorted.normalLong}${sorted.typesLong}`;
-            resolve([vscode.TextEdit.replace(range, insert)]);
+            try {
+                const documentImports = (0, get_imports_1.getImports)(e.document);
+                if (!documentImports)
+                    return resolve([]);
+                const insert = (0, sort_imports_1.sortImports)(documentImports);
+                resolve([vscode.TextEdit.replace(documentImports.range, insert)]);
+            }
+            catch (err) {
+                console.error(err);
+                resolve([]);
+            }
         }));
     });
     context.subscriptions.push(command, onSave);

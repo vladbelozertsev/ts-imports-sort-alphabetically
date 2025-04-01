@@ -1,19 +1,16 @@
-import parseImportNodes from "./parseImportNodes";
-import { getFirstN, getPosition, withoutSpaces } from "./utils";
 import { Imports } from "./types";
 import { TextDocument, window } from "vscode";
+import { getPrintWidth } from "./utils/options";
+import { getRange, withoutSpaces } from "./utils/helpers";
+import { parseImportNodes } from "./utils/parse-import-nodes";
 
 export const getImports = (pramDoc?: TextDocument) => {
   const document = pramDoc || window.activeTextEditor?.document;
   const imports = parseImportNodes(document);
+  const printWidth = getPrintWidth();
   if (!imports?.length) return null;
-  let insertBeg = 0;
-  let insertEnd = 0;
-  let lastImport = 0;
 
-  console.log(imports);
-
-  const mapped = imports.map((item, index) => {
+  const mapped = imports.map((item) => {
     const clear = item.replaceAll("\n", "").trim();
     const regex = new RegExp(/(?<={)[^]*?(?=})/, "g");
     const namedImports = clear.match(regex);
@@ -23,52 +20,26 @@ export const getImports = (pramDoc?: TextDocument) => {
       regex,
       ` ${withoutSpaces(namedImports[0])
         .split(",")
-        .filter((txt) => !!txt.trim())
+        .filter((txt) => !!txt)
         .sort()
         .join(", ")} `
     );
-
-    return getImport(item);
-    const singleQuote = getPosition(item, "'", 2) + 1;
-    const doubleQuote = getPosition(item, '"', 2) + 1;
-    const closestChar = Math.min(singleQuote, doubleQuote);
-    const semicolon = item[closestChar] === ";" ? 1 : 0;
-    const cutted = item.slice(0, closestChar + semicolon);
-    const breaks = getFirstN(item.slice(closestChar + semicolon));
-    lastImport = document!.getText().lastIndexOf(cutted) + cutted.length + breaks; // если кроме импортов пусто?
-    return getImport(cutted);
   });
 
   return mapped.reduce(
     (acc, cur) => {
-      const value = `import ${cur}`.trim();
-      const isType = cur.startsWith("type") || cur.startsWith(" type");
+      const value = cur.trim();
+      const isType = cur.startsWith("import type");
       const part = isType ? "types" : "normal";
-      const long = value.length > 120 ? "Long" : "";
+      const long = value.length >= printWidth ? "Long" : "";
       return { ...acc, [`${part}${long}`]: [...acc[`${part}${long}`], value] };
     },
     {
+      range: getRange(imports, document!),
       normal: [],
       normalLong: [],
       types: [],
       typesLong: [],
-      lastImport,
     } as Imports
-  );
-};
-
-export const getImport = (item: string) => {
-  const clear = item.replaceAll("\n", "").trim();
-  const regex = new RegExp(/(?<={)[^]*?(?=})/, "g");
-  const namedImports = clear.match(regex);
-  if (!namedImports) return clear;
-
-  return clear.replace(
-    regex,
-    ` ${withoutSpaces(namedImports[0])
-      .split(",")
-      .filter((txt) => !!txt.trim())
-      .sort()
-      .join(", ")} `
   );
 };

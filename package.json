@@ -30,9 +30,9 @@
           "default": true,
           "description": "Add empty line between [import ...] and [import type ...]"
         },
-        "ts-imports-sort-alphabetically.typeImportsPosition": {
-          "type": "string",
-          "default": "top",
+        "ts-imports-sort-alphabetically.typesTop": {
+          "type": "boolean",
+          "default": true,
           "description": "Position of [import type ...] relative to [import ...]"
         }
       }

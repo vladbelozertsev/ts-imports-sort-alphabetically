@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSortOnSave = getSortOnSave;
 exports.getPrintWidth = getPrintWidth;
 exports.getImportsDevide = getImportsDevide;
-exports.getTypeImportsPosition = getTypeImportsPosition;
+exports.getTypesTop = getTypesTop;
 const vscode_1 = require("vscode");
 function getSortOnSave() {
     return config().get("sortOnSave");
 }
 function getPrintWidth() {
-    return config().get("printWidth");
+    return config().get("sortOnSave");
 }
 function getImportsDevide() {
     return config().get("importsDevide");
 }
-function getTypeImportsPosition() {
-    return config().get("typeImportsPosition");
+function getTypesTop() {
+    return config().get("typesTop");
 }
 function config() {
     return vscode_1.workspace.getConfiguration("ts-imports-sort-alphabetically");

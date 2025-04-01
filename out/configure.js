@@ -1,16 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = deactivate;
-const vscode_1 = require("vscode");
 let sortOnSaveDisposer;
-function isFileJavascript() {
-    return (vscode_1.window.activeTextEditor?.document.languageId === "javascript" ||
-        vscode_1.window.activeTextEditor?.document.languageId === "javascriptreact");
-}
-function isFileTypescript() {
-    return (vscode_1.window.activeTextEditor?.document.languageId === "typescript" ||
-        vscode_1.window.activeTextEditor?.document.languageId === "typescriptreact");
-}
 function configure() {
     if (shouldSortOnSave())
         enableFileWatcher();
