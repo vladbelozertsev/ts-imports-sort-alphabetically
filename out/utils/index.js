@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFirstN = exports.withoutSpaces = exports.getTabString = exports.getPosition = void 0;
+exports.isTSFile = exports.isJSFile = exports.getFirstN = exports.withoutSpaces = exports.getTabString = exports.getPosition = void 0;
 const vscode_1 = require("vscode");
 const getPosition = (string, subString, index) => {
     return string.split(subString, index).join(subString).length;
@@ -31,5 +31,15 @@ const getFirstN = (str) => {
     return count;
 };
 exports.getFirstN = getFirstN;
+const isJSFile = (pramLanguageId) => {
+    const languageId = pramLanguageId || vscode_1.window.activeTextEditor?.document.languageId;
+    return languageId === "javascript" || languageId === "javascriptreact";
+};
+exports.isJSFile = isJSFile;
+const isTSFile = (pramLanguageId) => {
+    const languageId = pramLanguageId || vscode_1.window.activeTextEditor?.document.languageId;
+    return languageId === "typescript" || languageId === "typescriptreact";
+};
+exports.isTSFile = isTSFile;
 // https://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string
 //# sourceMappingURL=index.js.map

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { ImportsSorted } from "./types";
 
-export const insertImports = (sorted: ImportsSorted, end: number) => {
+export const commandImports = (sorted: ImportsSorted, end: number) => {
   const { normal, normalLong, types, typesLong } = sorted;
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;

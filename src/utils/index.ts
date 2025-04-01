@@ -26,4 +26,14 @@ export const getFirstN = (str: string) => {
   return count;
 };
 
+export const isJSFile = (pramLanguageId?: string) => {
+  const languageId = pramLanguageId || window.activeTextEditor?.document.languageId;
+  return languageId === "javascript" || languageId === "javascriptreact";
+};
+
+export const isTSFile = (pramLanguageId?: string) => {
+  const languageId = pramLanguageId || window.activeTextEditor?.document.languageId;
+  return languageId === "typescript" || languageId === "typescriptreact";
+};
+
 // https://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string

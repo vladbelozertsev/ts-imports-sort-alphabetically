@@ -1,15 +1,34 @@
-import { Imports } from "./types";
+import parseImportNodes from "./parseImportNodes";
 import { getFirstN, getPosition, withoutSpaces } from "./utils";
+import { Imports } from "./types";
 import { TextDocument, window } from "vscode";
 
 export const getImports = (pramDoc?: TextDocument) => {
   const document = pramDoc || window.activeTextEditor?.document;
-  const imports = document?.getText().split("import ");
+  const imports = parseImportNodes(document);
   if (!imports?.length) return null;
+  let insertBeg = 0;
+  let insertEnd = 0;
   let lastImport = 0;
 
-  const mapped = imports.slice(1).map((item, index) => {
-    if (index !== imports.length - 2) return getImport(item);
+  console.log(imports);
+
+  const mapped = imports.map((item, index) => {
+    const clear = item.replaceAll("\n", "").trim();
+    const regex = new RegExp(/(?<={)[^]*?(?=})/, "g");
+    const namedImports = clear.match(regex);
+    if (!namedImports) return clear;
+
+    return clear.replace(
+      regex,
+      ` ${withoutSpaces(namedImports[0])
+        .split(",")
+        .filter((txt) => !!txt.trim())
+        .sort()
+        .join(", ")} `
+    );
+
+    return getImport(item);
     const singleQuote = getPosition(item, "'", 2) + 1;
     const doubleQuote = getPosition(item, '"', 2) + 1;
     const closestChar = Math.min(singleQuote, doubleQuote);

@@ -10,8 +10,8 @@ export const sortImports = (imports: Imports): ImportsSorted => {
   return {
     types: imports.types.sort().join("\n") + tBreak,
     normal: imports.normal.sort().join("\n") + nBreak,
-    normalLong: imports.normalLong.map(getImport).join("\n") + nlBreak,
-    typesLong: imports.typesLong.map(getImport).join("\n") + tlBreak,
+    normalLong: imports.normalLong.map(getImport).join("\n\n") + nlBreak,
+    typesLong: imports.typesLong.map(getImport).join("\n\n") + tlBreak,
   };
 };
 
@@ -24,5 +24,5 @@ const getImport = (item: string) => {
     .filter((txt) => !!txt)
     .map((txt) => `${getTabString()}${withoutSpaces(txt)}`)
     .join(",\n");
-  return item.replace(regex, `\n${namedSorted},\n`);
+  return item.replace(regex, `\n${namedSorted}\n`);
 };

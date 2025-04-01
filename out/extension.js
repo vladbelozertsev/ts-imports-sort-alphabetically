@@ -38,47 +38,36 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const get_imports_1 = require("./get-imports");
 const sort_imports_1 = require("./sort-imports");
-const insert_imports_1 = require("./insert-imports");
 function activate(context) {
-    const extFn = () => {
+    const command = vscode.commands.registerCommand("ts-imports-sort-alphabetically.sort", () => {
         const editor = vscode.window.activeTextEditor;
         const documentImports = (0, get_imports_1.getImports)();
         if (!editor || !documentImports)
             return;
         const sorted = (0, sort_imports_1.sortImports)(documentImports);
-        (0, insert_imports_1.insertImports)(sorted, documentImports.lastImport);
-    };
-    const disposable = vscode.commands.registerCommand("ts-imports-sort-alphabetically.sort", extFn);
-    const asd = vscode.workspace.onWillSaveTextDocument((e) => {
-        e.waitUntil(new Promise((resolve, reject) => {
+        editor.edit((TextEdit) => {
+            const begin = editor?.document.getText().indexOf("import ");
+            const rangeBeg = editor?.document.positionAt(begin);
+            const rangeEnd = editor?.document.positionAt(documentImports.lastImport);
+            const range = new vscode.Range(rangeBeg, rangeEnd);
+            const { normal, normalLong, types, typesLong } = sorted;
+            TextEdit.replace(range, `${types}${normal}${normalLong}${typesLong}`);
+        });
+    });
+    const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
+        e.waitUntil(new Promise((resolve) => {
             const documentImports = (0, get_imports_1.getImports)(e.document);
             if (!documentImports)
                 return resolve([]);
             const sorted = (0, sort_imports_1.sortImports)(documentImports);
-            const begin = e.document.getText().indexOf("import");
+            const begin = e.document.getText().indexOf("import ");
             const end = documentImports.lastImport;
             const range = new vscode.Range(e.document.positionAt(begin), e.document.positionAt(end));
             const insert = `${sorted.types}${sorted.normal}${sorted.normalLong}${sorted.typesLong}`;
             resolve([vscode.TextEdit.replace(range, insert)]);
         }));
-        // extFn();
     });
-    context.subscriptions.push(disposable, asd);
+    context.subscriptions.push(command, onSave);
 }
 function deactivate() { }
-// vscode.workspace.onWillSaveTextDocument(() => {
-// 	editor.edit((editBuilder) => {
-// 		editBuilder.replace(
-// 			new vscode.Range(
-// 				editor?.document.positionAt(
-// 					editor?.document.getText().indexOf("import")
-// 				),
-// 				editor?.document.positionAt(
-// 					editor?.document.getText().indexOf(restDocument)
-// 				)
-// 			),
-// 			"restDocument"
-// 		);
-// 	});
-// });
 //# sourceMappingURL=extension.js.map

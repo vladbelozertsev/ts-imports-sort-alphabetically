@@ -12,6 +12,31 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Sort TS/JS imports alphbetically",
+      "properties": {
+        "ts-imports-sort-alphabetically.sortOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sort imports on save"
+        },
+        "ts-imports-sort-alphabetically.printWidth": {
+          "type": "number",
+          "default": 120,
+          "description": "Max length of single line import, default - 120"
+        },
+        "ts-imports-sort-alphabetically.importsDevide": {
+          "type": "boolean",
+          "default": true,
+          "description": "Add empty line between [import ...] and [import type ...]"
+        },
+        "ts-imports-sort-alphabetically.typeImportsPosition": {
+          "type": "string",
+          "default": "top",
+          "description": "Position of [import type ...] relative to [import ...]"
+        }
+      }
+    },
     "commands": [
       {
         "command": "ts-imports-sort-alphabetically.sort",
