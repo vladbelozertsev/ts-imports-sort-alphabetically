@@ -1,8 +1,14 @@
 {
   "name": "ts-imports-sort-alphabetically",
   "displayName": "ts-imports-sort-alphabetically",
-  "description": "TS Sort Imports Alphabetically",
+  "description": "TS/JS Sort Imports Alphabetically",
+  "publisher": "vladbelozertsev",
+  "icon": "images/logo.png",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vladbelozertsev/ts-imports-sort-alphabetically"
+  },
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -22,7 +28,7 @@
       "properties": {
         "ts-imports-sort-alphabetically.sortOnSave": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Sort imports on save"
         },
         "ts-imports-sort-alphabetically.printWidth": {

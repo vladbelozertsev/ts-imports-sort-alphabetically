@@ -21,9 +21,10 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
+    const disable = e.document.getText().includes("disable-sort-imports");
     const isSupporedLang = isSupportedLang(e.document.languageId);
     const isSortOnSave = getSortOnSave();
-    if (!isSupporedLang || !isSortOnSave) return;
+    if (!isSupporedLang || !isSortOnSave || disable) return;
     e.waitUntil(
       new Promise<vscode.TextEdit[]>((resolve) => {
         try {

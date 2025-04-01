@@ -7,10 +7,3 @@ export type Imports = {
   typesLong: string[];
   range: Range;
 };
-
-export type ImportsSorted = {
-  normal: string;
-  types: string;
-  normalLong: string;
-  typesLong: string;
-};

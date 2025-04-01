@@ -58,9 +58,10 @@ function activate(context) {
         }
     });
     const onSave = vscode.workspace.onWillSaveTextDocument((e) => {
+        const disable = e.document.getText().includes("disable-sort-imports");
         const isSupporedLang = (0, helpers_1.isSupportedLang)(e.document.languageId);
         const isSortOnSave = (0, options_1.getSortOnSave)();
-        if (!isSupporedLang || !isSortOnSave)
+        if (!isSupporedLang || !isSortOnSave || disable)
             return;
         e.waitUntil(new Promise((resolve) => {
             try {
