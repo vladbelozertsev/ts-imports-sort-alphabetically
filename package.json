@@ -33,8 +33,8 @@
         },
         "ts-imports-sort-alphabetically.printWidth": {
           "type": "number",
-          "default": 120,
-          "description": "Max length of single line import, default - 120"
+          "default": 80,
+          "description": "Max length of single line import, default - 80"
         },
         "ts-imports-sort-alphabetically.importsDevide": {
           "type": "boolean",
