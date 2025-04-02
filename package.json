@@ -1,10 +1,10 @@
 {
   "name": "ts-imports-sort-alphabetically",
-  "displayName": "ts-imports-sort-alphabetically",
-  "description": "TS/JS Sort Imports Alphabetically",
+  "displayName": "TS/JS Sort Imports",
+  "description": "Alphabetically, like strings",
   "publisher": "vladbelozertsev",
   "icon": "images/logo.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/vladbelozertsev/ts-imports-sort-alphabetically"
@@ -13,7 +13,14 @@
     "vscode": "^1.98.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
+  ],
+  "keywords": [
+    "typescript",
+    "javascript",
+    "imports",
+    "sort",
+    "alphabetically"
   ],
   "activationEvents": [
     "onLanguage:javascript",
