@@ -10,6 +10,7 @@ const getImports = (pramDoc) => {
     const imports = (0, parse_import_nodes_1.parseImportNodes)(document);
     if (!imports?.length)
         return null;
+    const space = (0, options_1.getSpacing)() ? " " : "";
     const printWidth = (0, options_1.getPrintWidth)();
     const mapped = imports.map((item) => {
         const clear = item.replaceAll("\n", "").trim();
@@ -17,11 +18,11 @@ const getImports = (pramDoc) => {
         const namedImports = clear.match(regex);
         if (!namedImports)
             return clear;
-        return clear.replace(regex, ` ${(0, helpers_1.withoutSpaces)(namedImports[0])
+        return clear.replace(regex, `${space}${(0, helpers_1.withoutSpaces)(namedImports[0])
             .split(",")
             .filter((txt) => !!txt)
             .sort()
-            .join(", ")} `);
+            .join(", ")}${space}`);
     });
     return mapped.reduce((acc, cur) => {
         const value = cur.trim();

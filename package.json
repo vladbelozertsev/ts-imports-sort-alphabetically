@@ -45,6 +45,11 @@
           "type": "boolean",
           "default": true,
           "description": "Position of [import type ...] relative to [import ...]"
+        },
+        "ts-imports-sort-alphabetically.bracketSpacing": {
+          "type": "boolean",
+          "default": true,
+          "description": "Add spaces between import brackets, default - true"
         }
       }
     },

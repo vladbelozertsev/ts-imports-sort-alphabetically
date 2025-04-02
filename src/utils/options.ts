@@ -16,6 +16,10 @@ export function getTypesTop(): boolean {
   return config().get("typesTop") as boolean;
 }
 
+export function getSpacing(): boolean {
+  return config().get("bracketSpacing") as boolean;
+}
+
 function config() {
   return workspace.getConfiguration("ts-imports-sort-alphabetically");
 }

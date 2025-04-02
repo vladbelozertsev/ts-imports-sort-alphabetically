@@ -1,6 +1,6 @@
 import { Imports } from "./types";
 import { TextDocument, window } from "vscode";
-import { getPrintWidth } from "./utils/options";
+import { getPrintWidth, getSpacing } from "./utils/options";
 import { getRange, withoutSpaces } from "./utils/helpers";
 import { parseImportNodes } from "./utils/parse-import-nodes";
 
@@ -8,6 +8,7 @@ export const getImports = (pramDoc?: TextDocument) => {
   const document = pramDoc || window.activeTextEditor?.document;
   const imports = parseImportNodes(document);
   if (!imports?.length) return null;
+  const space = getSpacing() ? " " : "";
   const printWidth = getPrintWidth();
 
   const mapped = imports.map((item) => {
@@ -18,11 +19,11 @@ export const getImports = (pramDoc?: TextDocument) => {
 
     return clear.replace(
       regex,
-      ` ${withoutSpaces(namedImports[0])
+      `${space}${withoutSpaces(namedImports[0])
         .split(",")
         .filter((txt) => !!txt)
         .sort()
-        .join(", ")} `
+        .join(", ")}${space}`
     );
   });
 
