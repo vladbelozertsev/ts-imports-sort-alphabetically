@@ -19,8 +19,9 @@ export const getImports = (pramDoc?: TextDocument) => {
 
     return clear.replace(
       regex,
-      `${space}${withoutSpaces(namedImports[0])
+      `${space}${namedImports[0]
         .split(",")
+        .map((item) => item.trim())
         .filter((txt) => !!txt)
         .sort()
         .join(", ")}${space}`

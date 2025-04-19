@@ -18,8 +18,9 @@ const getImports = (pramDoc) => {
         const namedImports = clear.match(regex);
         if (!namedImports)
             return clear;
-        return clear.replace(regex, `${space}${(0, helpers_1.withoutSpaces)(namedImports[0])
+        return clear.replace(regex, `${space}${namedImports[0]
             .split(",")
+            .map((item) => item.trim())
             .filter((txt) => !!txt)
             .sort()
             .join(", ")}${space}`);

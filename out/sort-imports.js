@@ -30,8 +30,8 @@ const getImport = (item) => {
         return item;
     const namedSorted = namedImports[0]
         .split(",")
-        .filter((txt) => !!txt)
-        .map((txt) => `${(0, helpers_1.getTabString)()}${(0, helpers_1.withoutSpaces)(txt)}`)
+        .filter((txt) => !!txt.trim())
+        .map((txt) => `${(0, helpers_1.getTabString)()}${txt.trim()}`)
         .join(",\n");
     return item.replace(regex, `\n${namedSorted}\n`);
 };

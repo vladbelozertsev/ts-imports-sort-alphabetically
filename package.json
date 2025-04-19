@@ -1,10 +1,10 @@
 {
   "name": "ts-imports-sort-alphabetically",
   "displayName": "TS/JS Sort Imports",
-  "description": "Alphabetically, like strings",
+  "description": "Alphabetically, like strings.",
   "publisher": "vladbelozertsev",
   "icon": "images/logo.png",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/vladbelozertsev/ts-imports-sort-alphabetically"
