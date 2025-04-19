@@ -28,7 +28,7 @@ You can disable auto sorting for some files, by adding this comment to document:
 
 ## Settings
 
-`ts-imports-sort-alphabetically.sortOnSave` - Boolean, default: `false`. Sort imports before file will be saved.
+`ts-imports-sort-alphabetically.sortOnSave` - Boolean, default: `true`. Sort imports before file will be saved.
 
 `ts-imports-sort-alphabetically.printWidth` - Number, default: `80`. Prittier-like print width. Max width for single lined import. If bigger, it will be breaked into few lines.
 
@@ -38,7 +38,7 @@ You can disable auto sorting for some files, by adding this comment to document:
 
 `ts-imports-sort-alphabetically.bracketSpacing` - Boolean, default `true`. Spaces between import brackets "{space...space}".
 
-## Images:
+### Images:
 
 ![example-image](https://github.com/vladbelozertsev/ts-imports-sort-alphabetically/blob/main/images/basic-before.png?raw=true)
 

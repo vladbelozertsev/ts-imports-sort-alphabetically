@@ -20,7 +20,3 @@ export const isSupportedLang = (languageId?: string) => {
   const langs = ["javascript", "javascriptreact", "typescript", "typescriptreact"];
   return !languageId ? false : langs.includes(languageId);
 };
-
-export const withoutSpaces = (str: string) => {
-  return str.replaceAll("type ", "type_$!$_").replaceAll(" ", "").replaceAll("_$!$_", " ");
-};

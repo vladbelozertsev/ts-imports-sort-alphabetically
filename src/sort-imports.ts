@@ -1,6 +1,6 @@
 import { Imports } from "./types";
 import { getImportsDevide, getTypesTop } from "./utils/options";
-import { getTabString, withoutSpaces } from "./utils/helpers";
+import { getTabString } from "./utils/helpers";
 
 export const sortImports = (imports: Imports): string => {
   const first = getTypesTop() ? imports.types : imports.normal;

@@ -1,7 +1,7 @@
 import { Imports } from "./types";
 import { TextDocument, window } from "vscode";
 import { getPrintWidth, getSpacing } from "./utils/options";
-import { getRange, withoutSpaces } from "./utils/helpers";
+import { getRange } from "./utils/helpers";
 import { parseImportNodes } from "./utils/parse-import-nodes";
 
 export const getImports = (pramDoc?: TextDocument) => {
