@@ -38,7 +38,7 @@ You can disable auto sorting for some files, by adding this comment to document:
 
 `ts-imports-sort-alphabetically.bracketSpacing` - Boolean, default `true`. Spaces between import brackets "{space...space}".
 
-### Images:
+## Images:
 
 ![example-image](https://github.com/vladbelozertsev/ts-imports-sort-alphabetically/blob/main/images/basic-before.png?raw=true)
 

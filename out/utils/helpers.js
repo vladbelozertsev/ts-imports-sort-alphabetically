@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.withoutSpaces = exports.isSupportedLang = exports.getTabString = exports.getRange = void 0;
+exports.isSupportedLang = exports.getTabString = exports.getRange = void 0;
 const vscode_1 = require("vscode");
 const getRange = (arr, document) => {
     const last = { i: arr[arr.length - 1], len: arr[arr.length - 1].length };
@@ -25,8 +25,4 @@ const isSupportedLang = (languageId) => {
     return !languageId ? false : langs.includes(languageId);
 };
 exports.isSupportedLang = isSupportedLang;
-const withoutSpaces = (str) => {
-    return str.replaceAll("type ", "type_$!$_").replaceAll(" ", "").replaceAll("_$!$_", " ");
-};
-exports.withoutSpaces = withoutSpaces;
 //# sourceMappingURL=helpers.js.map
