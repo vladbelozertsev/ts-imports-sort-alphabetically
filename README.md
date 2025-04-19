@@ -1,6 +1,6 @@
 ## About
 
-I didn't found similar extension, so i decide to create my own. Extension for sorting TS/JS imports alphabetically, like you sort them by ["Sort lines"](https://marketplace.visualstudio.com/items?itemName=Tyriar.sort-lines) extension. Extension works for `js/ts` and `jsx/tsx` type of files. Extension sort imports in both directions: horizontal and vertical.
+I didn't find similar extension, so i decide to create my own. Extension for sorting TS/JS imports alphabetically, like you sort them by ["Sort lines"](https://marketplace.visualstudio.com/items?itemName=Tyriar.sort-lines) extension. Extension works for `js/ts` and `jsx/tsx` type of files. Extension sort imports in both directions: horizontal and vertical.
 
 ## Usage: command
 
